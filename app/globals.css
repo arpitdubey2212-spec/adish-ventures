@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+:root {
+  --adish-dark: #1B4D3E;
+  --adish-green: #2D5A45;
+  --adish-light: #3d7a5f;
+  --adish-forest: #1B4D3E;
+  --adish-gold: #C8A854;
+  --adish-light-gold: #D4AF57;
+  --adish-beige: #F5F1E8;
+  --adish-cream: #F3F1ED;
+  --adish-text: #1a1a1a;
+}
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--adish-cream);
+  color: var(--adish-text);
+  font-family: Georgia, Garamond, serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.btn-primary {
+  background-color: var(--adish-green);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: var(--adish-forest);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(45, 90, 69, 0.3);
+}
+
+.btn-secondary {
+  border: 2px solid var(--adish-green);
+  color: var(--adish-green);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: all 0.3s;
+  background-color: transparent;
+}
+
+.btn-secondary:hover {
+  background-color: var(--adish-green);
+  color: white;
+}
+
+.text-gold {
+  color: var(--adish-gold);
+}
+
+.bg-gold {
+  background-color: var(--adish-gold);
+}
+
+/* Hero sections */
+.hero-bg {
+  background: linear-gradient(135deg, var(--adish-forest) 0%, var(--adish-green) 100%);
+}
+
+/* Cards with shadow */
+.card-shadow {
+  box-shadow: 0 4px 15px rgba(45, 90, 69, 0.15);
+}
+
+/* Serif headlines */
+h1, h2, h3 {
+  font-family: Georgia, Garamond, serif;
+  color: var(--adish-text);
+}
