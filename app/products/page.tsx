@@ -42,7 +42,7 @@ export default function Products() {
               // Use your product images
               const heroImages = [
                 '/images/products/powder.avif', // Cordyceps Potency Powder
-                '/images/tincture-bottle.jpeg' // Cordyceps Endurance Tincture
+                '/images/products/tincture-real.avif' // Cordyceps Endurance Tincture
               ];
               return (
               <div key={product.id} className="border-2 border-adish-beige rounded-lg overflow-hidden hover:shadow-xl transition-shadow">

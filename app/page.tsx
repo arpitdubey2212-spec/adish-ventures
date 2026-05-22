@@ -37,9 +37,8 @@ export default function Home() {
         <div className="relative z-10 max-w-7xl mx-auto w-full px-4 md:px-8">
           <div className="max-w-2xl">
             <div className="mb-6">
-              <img src="/images/logo-new.png" alt="Adish Ventures Logo" className="h-16 mb-4" />
               <span className="inline-block bg-yellow-600 bg-opacity-95 text-white px-6 py-3 rounded-full text-sm font-bold mb-4 shadow-xl" style={{ color: '#1B4D3E' }}>
-                ADISH VENTURES
+                REDEFINING BOTANICAL VITALITY
               </span>
             </div>
             <h1 className="text-4xl md:text-5xl font-serif font-bold mb-6 leading-tight" style={{
@@ -55,27 +54,15 @@ export default function Home() {
               Explore the profound benefits of Cordyceps Militaris—engineered for performance, vitality, and wellness. 2,000 years of Himalayan wisdom meets modern science.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <button
-                onClick={() => document.getElementById('products')?.scrollIntoView({behavior: 'smooth'})}
-                className="btn-primary flex items-center justify-center gap-2 shadow-lg w-fit"
-              >
+              <Link href="/products" className="btn-primary flex items-center justify-center gap-2 shadow-lg w-fit">
                 Shop Now <ArrowRight size={20} />
-              </button>
+              </Link>
               <Link href="#benefits" className="btn-secondary flex items-center justify-center gap-2 w-fit">
                 Learn More
               </Link>
             </div>
           </div>
         </div>
-      </section>
-
-      {/* Adish Bio - Philosophy Section */}
-      <section className="py-0 px-0 bg-white">
-        <img
-          src="/images/sections/adish-bio.png"
-          alt="Adish Ventures Philosophy"
-          className="w-full h-auto object-cover"
-        />
       </section>
 
       {/* Product Showcase with Real Images */}
@@ -129,12 +116,17 @@ export default function Home() {
                 </div>
                 <div className="flex justify-between items-center pt-6 border-t gap-4">
                   <span className="text-3xl font-bold text-gray-900">₹1,000</span>
-                  <button
-                    onClick={() => handleAddToCart('cordyceps-powder', 'Cordyceps Potency Powder', 1000)}
-                    className="bg-green-700 text-white px-6 py-3 rounded-lg font-bold hover:bg-green-800 transition"
-                  >
-                    Add to Cart
-                  </button>
+                  <div className="flex gap-3">
+                    <button
+                      onClick={() => handleAddToCart('cordyceps-powder', 'Cordyceps Potency Powder', 1000)}
+                      className="bg-green-700 text-white px-4 py-3 rounded-lg font-bold hover:bg-green-800 transition text-sm"
+                    >
+                      Add to Cart
+                    </button>
+                    <Link href="/products" className="bg-yellow-600 text-white px-4 py-3 rounded-lg font-bold hover:bg-yellow-700 transition text-sm">
+                      Shop Now
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
@@ -143,7 +135,7 @@ export default function Home() {
             <div style={{ background: 'linear-gradient(135deg, #e8dcc8 0%, #f5f1e8 100%)' }} className="border-2 border-yellow-600 rounded-lg overflow-hidden hover:shadow-lg transition-all">
               <Link href="/products" className="h-64 bg-gray-100 overflow-hidden block cursor-pointer">
                 <img
-                  src="/images/tincture-bottle.jpeg"
+                  src="/images/products/tincture-real.avif"
                   alt="Cordyceps Endurance Tincture"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                 />
@@ -177,20 +169,20 @@ export default function Home() {
                 </div>
                 <div className="flex justify-between items-center pt-6 border-t border-yellow-600 border-opacity-30 gap-4">
                   <span className="text-3xl font-bold text-gray-900">₹1,000</span>
-                  <button
-                    onClick={() => handleAddToCart('performance-tincture', 'Cordyceps Endurance Tincture', 1000)}
-                    className="bg-green-700 text-white px-6 py-3 rounded-lg font-bold hover:bg-green-800 transition"
-                  >
-                    Add to Cart
-                  </button>
+                  <div className="flex gap-3">
+                    <button
+                      onClick={() => handleAddToCart('performance-tincture', 'Cordyceps Endurance Tincture', 1000)}
+                      className="bg-green-700 text-white px-4 py-3 rounded-lg font-bold hover:bg-green-800 transition text-sm"
+                    >
+                      Add to Cart
+                    </button>
+                    <Link href="/products" className="bg-yellow-600 text-white px-4 py-3 rounded-lg font-bold hover:bg-yellow-700 transition text-sm">
+                      Shop Now
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="text-center mt-12">
-            <Link href="/products" className="inline-block bg-green-700 text-white px-8 py-3 rounded-lg font-bold hover:bg-green-800 transition">
-              Shop Now <ArrowRight className="inline ml-2" size={20} />
-            </Link>
           </div>
         </div>
       </section>
@@ -307,7 +299,7 @@ export default function Home() {
       {/* Adish Hindi Section */}
       <section className="py-0 px-0 bg-white">
         <img
-          src="/images/adish-hindi.png"
+          src="/images/adish-bio-clear.png"
           alt="Adish in Hindi"
           className="w-full h-auto object-cover"
         />

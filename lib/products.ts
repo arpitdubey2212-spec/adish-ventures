@@ -60,7 +60,7 @@ Multi-System Benefits:
     category: "Tincture",
     price: 1000,
     description: "Sublingual dual-extract for rapid, sustained performance enhancement",
-    image: "/images/tincture-bottle.jpeg",
+    image: "/images/products/tincture-real.avif",
     imageAlt: "Cordyceps Endurance Tincture",
     benefits: [
       "2-5 mins rapid absorption",
