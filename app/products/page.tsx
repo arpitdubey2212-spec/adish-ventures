@@ -91,7 +91,7 @@ export default function Products() {
                   </div>
 
                   {/* Right: Product Details */}
-                  <div className="flex flex-col justify-start">
+                  <div className="flex flex-col justify-start px-0 sm:px-2">
                     {/* Title & Rating */}
                     <h2 className="text-4xl font-serif font-bold text-adish-dark mb-3">
                       {product.name}
@@ -117,7 +117,7 @@ export default function Products() {
                     </p>
 
                     {/* Quick Specs */}
-                    <div className="grid grid-cols-2 gap-4 mb-8 bg-adish-beige p-5 rounded-lg border border-adish-gold/20">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 bg-adish-beige p-5 rounded-lg border border-adish-gold/20">
                       <div>
                         <p className="text-adish-green text-xs uppercase tracking-wide font-bold mb-1">Absorption</p>
                         <p className="font-bold text-adish-dark">{product.specs.absorptionSpeed}</p>
