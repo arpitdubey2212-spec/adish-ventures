@@ -39,18 +39,9 @@ export default function About() {
               Quality Without Compromise
             </h2>
 
-            <p className="text-lg text-adish-green leading-relaxed mb-12">
+            <p className="text-lg text-adish-green leading-relaxed mb-8">
               We understand that when it comes to your health, purity is non-negotiable. That is why Adish Ventures is built on a foundation of rigorous quality control and transparency. Every batch of our <em>Cordyceps militaris</em>—whether in tincture or extract powder form—is cultivated to ensure maximum potency and bioavailability.
             </p>
-
-            {/* Foundational Architecture Image */}
-            <div className="mb-12 rounded-lg overflow-hidden shadow-lg">
-              <img
-                src="/images/about/foundational-architecture.png"
-                alt="The Foundational Architecture - Purity, Purpose, Potency"
-                className="w-full h-auto object-cover"
-              />
-            </div>
 
             <div className="grid md:grid-cols-3 gap-8">
               <div className="bg-adish-beige p-6 rounded-lg border-l-4 border-adish-gold">
@@ -84,10 +75,19 @@ export default function About() {
             <p className="text-lg text-adish-green leading-relaxed mb-6">
               In a market saturated with generic supplements, Adish Ventures stands apart through our dedication to efficacy. By concentrating on the science of <em>Cordyceps Militaris</em>, we provide a reliable, consistent, and potent solution for energy, endurance, and overall well-being.
             </p>
-            <div className="bg-adish-beige p-8 rounded-lg border-l-4 border-adish-gold">
+            <div className="bg-adish-beige p-8 rounded-lg border-l-4 border-adish-gold mb-12">
               <p className="text-lg text-adish-green leading-relaxed font-medium">
                 We are here to support your journey, every step of the way.
               </p>
+            </div>
+
+            {/* Foundational Architecture Image */}
+            <div className="rounded-lg overflow-hidden shadow-lg">
+              <img
+                src="/images/about/foundational-architecture.png"
+                alt="The Foundational Architecture - Purity, Purpose, Potency"
+                className="w-full h-auto object-cover"
+              />
             </div>
           </div>
         </div>
