@@ -2,7 +2,7 @@
 
 import { products } from '@/lib/products';
 import { ShoppingCart, Check, Star, ShieldCheck } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ImageGallery from '@/components/ImageGallery';
 
 export default function Products() {
@@ -11,6 +11,16 @@ export default function Products() {
     'cordyceps-powder': 1,
     'performance-tincture': 1,
   });
+
+  // Scroll to first product on page load
+  useEffect(() => {
+    const firstProductElement = document.getElementById('product-cordyceps-powder');
+    if (firstProductElement) {
+      setTimeout(() => {
+        firstProductElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+  }, []);
 
   const handleAddToCart = (productId: string, productName: string, price: number) => {
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');
@@ -68,7 +78,7 @@ export default function Products() {
       <section className="py-16 px-4">
         <div className="max-w-7xl mx-auto">
           {products.map((product, idx) => (
-            <div key={product.id}>
+            <div key={product.id} id={`product-${product.id}`}>
               {/* Product Section */}
               <div className="py-12">
                 <div className="grid lg:grid-cols-2 gap-12 items-start">
@@ -136,34 +146,40 @@ export default function Products() {
                       <p className="text-green-600 text-sm font-semibold mt-2">Save ₹200 - Limited Offer</p>
                     </div>
 
-                    {/* Quantity Selector */}
-                    <div className="mb-6 flex items-center gap-4">
-                      <span className="text-adish-green font-semibold">Quantity:</span>
-                      <div className="flex items-center border border-gray-300 rounded-lg">
+                    {/* Quantity Selector & Action Buttons */}
+                    <div className="mb-8">
+                      <div className="mb-4 flex items-center gap-4">
+                        <span className="text-adish-green font-semibold">Quantity:</span>
+                        <div className="flex items-center border border-gray-300 rounded-lg">
+                          <button
+                            onClick={() => handleQuantityChange(product.id, (quantities[product.id] || 1) - 1)}
+                            className="px-4 py-2 text-adish-green hover:bg-gray-100"
+                          >
+                            −
+                          </button>
+                          <input
+                            type="number"
+                            min="1"
+                            value={quantities[product.id] || 1}
+                            onChange={(e) => handleQuantityChange(product.id, parseInt(e.target.value) || 1)}
+                            className="w-12 text-center border-0 font-bold text-adish-dark"
+                          />
+                          <button
+                            onClick={() => handleQuantityChange(product.id, (quantities[product.id] || 1) + 1)}
+                            className="px-4 py-2 text-adish-green hover:bg-gray-100"
+                          >
+                            +
+                          </button>
+                        </div>
                         <button
-                          onClick={() => handleQuantityChange(product.id, (quantities[product.id] || 1) - 1)}
-                          className="px-4 py-2 text-adish-green hover:bg-gray-100"
+                          onClick={() => handleAddToCart(product.id, product.name, product.price)}
+                          className="px-6 py-2 rounded-lg font-bold bg-adish-gold text-adish-dark hover:bg-yellow-500 transition-all shadow-md whitespace-nowrap"
                         >
-                          −
-                        </button>
-                        <input
-                          type="number"
-                          min="1"
-                          value={quantities[product.id] || 1}
-                          onChange={(e) => handleQuantityChange(product.id, parseInt(e.target.value) || 1)}
-                          className="w-12 text-center border-0 font-bold text-adish-dark"
-                        />
-                        <button
-                          onClick={() => handleQuantityChange(product.id, (quantities[product.id] || 1) + 1)}
-                          className="px-4 py-2 text-adish-green hover:bg-gray-100"
-                        >
-                          +
+                          Buy Now
                         </button>
                       </div>
-                    </div>
 
-                    {/* CTA Buttons */}
-                    <div className="space-y-3 mb-8">
+                      {/* Add to Cart Button */}
                       <button
                         onClick={() => handleAddToCart(product.id, product.name, product.price)}
                         className={`w-full py-4 rounded-lg font-bold transition-all flex items-center justify-center gap-2 text-lg ${
@@ -181,9 +197,6 @@ export default function Products() {
                             <ShoppingCart size={22} /> Add to Cart
                           </>
                         )}
-                      </button>
-                      <button className="w-full py-3 rounded-lg font-bold bg-adish-gold text-adish-dark hover:bg-yellow-500 transition-all shadow-md">
-                        Buy Now
                       </button>
                     </div>
 
