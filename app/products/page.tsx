@@ -81,7 +81,7 @@ export default function Products() {
             <div key={product.id} id={`product-${product.id}`}>
               {/* Product Section */}
               <div className="py-12">
-                <div className="grid lg:grid-cols-2 gap-12 items-start">
+                <div className="grid lg:grid-cols-2 gap-4 lg:gap-12 items-start w-full max-w-full">
                   {/* Left: Product Image Gallery */}
                   <div>
                     <ImageGallery
@@ -117,7 +117,7 @@ export default function Products() {
                     </p>
 
                     {/* Quick Specs */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 bg-adish-beige p-5 rounded-lg border border-adish-gold/20">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 mb-8 bg-adish-beige p-3 sm:p-5 rounded-lg border border-adish-gold/20 w-full max-w-full">
                       <div>
                         <p className="text-adish-green text-xs uppercase tracking-wide font-bold mb-1">Absorption</p>
                         <p className="font-bold text-adish-dark">{product.specs.absorptionSpeed}</p>
@@ -147,7 +147,7 @@ export default function Products() {
                     </div>
 
                     {/* Quantity + Add to Cart + Buy Now - All on One Line */}
-                    <div className="mb-8 flex items-center gap-3">
+                    <div className="mb-8 flex flex-wrap items-center gap-2 sm:gap-3 w-full">
                       {/* Quantity Selector */}
                       <span className="text-adish-green font-semibold">Qty:</span>
                       <div className="flex items-center border border-gray-300 rounded-lg">
