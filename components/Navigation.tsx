@@ -31,7 +31,7 @@ export default function Navigation() {
               className="h-10 w-10 object-contain"
             />
             <span className="text-xl font-serif font-bold text-gray-900 hidden sm:inline">
-              Adish Ventures
+              Ethnobotanical
             </span>
           </Link>
 
