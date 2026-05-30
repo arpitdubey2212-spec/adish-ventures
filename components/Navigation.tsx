@@ -20,8 +20,8 @@ export default function Navigation() {
   }, []);
 
   return (
-    <nav className="sticky top-0 z-50 bg-white border-b-2 border-adish-beige">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav className="sticky top-0 z-50 bg-white border-b-2 border-adish-beige w-full overflow-x-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2 hover:opacity-80 transition">
@@ -30,8 +30,8 @@ export default function Navigation() {
               alt="Adish Ventures Logo"
               className="h-10 w-10 object-contain"
             />
-            <span className="text-xl font-serif font-bold text-gray-900 hidden sm:inline">
-              Adish Ventures
+            <span className="text-lg sm:text-xl font-serif font-bold text-gray-900">
+              Ethnobotanical
             </span>
           </Link>
 
@@ -96,26 +96,26 @@ export default function Navigation() {
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="md:hidden pb-4 space-y-2">
-            <Link href="/" className="block px-4 py-2 text-adish-dark hover:bg-adish-beige rounded">
+          <div className="md:hidden bg-white border-b-2 border-adish-beige pb-4 space-y-2">
+            <Link href="/" className="block px-4 py-2 text-adish-dark hover:bg-adish-beige rounded" onClick={() => setIsOpen(false)}>
               Home
             </Link>
-            <Link href="/products" className="block px-4 py-2 text-adish-dark hover:bg-adish-beige rounded">
+            <Link href="/products" className="block px-4 py-2 text-adish-dark hover:bg-adish-beige rounded" onClick={() => setIsOpen(false)}>
               Shop
             </Link>
             <div className="px-4 py-2">
               <p className="font-bold text-adish-dark mb-2">About</p>
               <div className="ml-4 space-y-1">
-                <Link href="/about" className="block px-4 py-2 text-adish-dark hover:bg-adish-beige rounded text-sm">
+                <Link href="/about" className="block px-4 py-2 text-adish-dark hover:bg-adish-beige rounded text-sm" onClick={() => setIsOpen(false)}>
                   About
                 </Link>
-                <Link href="/blog" className="block px-4 py-2 text-adish-dark hover:bg-adish-beige rounded text-sm">
+                <Link href="/blog" className="block px-4 py-2 text-adish-dark hover:bg-adish-beige rounded text-sm" onClick={() => setIsOpen(false)}>
                   Blog
                 </Link>
-                <Link href="/faq" className="block px-4 py-2 text-adish-dark hover:bg-adish-beige rounded text-sm">
+                <Link href="/faq" className="block px-4 py-2 text-adish-dark hover:bg-adish-beige rounded text-sm" onClick={() => setIsOpen(false)}>
                   FAQ
                 </Link>
-                <Link href="/contact" className="block px-4 py-2 text-adish-dark hover:bg-adish-beige rounded text-sm">
+                <Link href="/contact" className="block px-4 py-2 text-adish-dark hover:bg-adish-beige rounded text-sm" onClick={() => setIsOpen(false)}>
                   Contact
                 </Link>
               </div>

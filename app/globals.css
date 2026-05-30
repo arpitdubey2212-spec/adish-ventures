@@ -17,21 +17,19 @@
   --font-mono: var(--font-geist-mono);
 }
 
+html {
+  scroll-behavior: smooth;
+  scrollbar-gutter: stable;
+  overflow-x: hidden;
+  width: 100%;
+}
+
 body {
   background: var(--adish-cream);
   color: var(--adish-text);
   font-family: Georgia, Garamond, serif;
   overflow-x: hidden;
-}
-
-html {
-  scroll-behavior: smooth;
-  scrollbar-gutter: stable;
-  overflow-x: hidden;
-}
-
-body {
-  overflow-x: hidden;
+  width: 100%;
 }
 
 .btn-primary {

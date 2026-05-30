@@ -34,10 +34,10 @@ export default function Home() {
         <div className="absolute inset-0 bg-black opacity-50"></div>
 
         {/* Text Content - Overlaid */}
-        <div className="relative z-10 max-w-7xl mx-auto w-full px-4 md:px-8">
+        <div className="relative z-10 max-w-7xl mx-auto w-full px-4 md:px-8 pt-16">
           <div className="max-w-2xl">
             <div className="mb-6">
-              <span className="inline-block bg-yellow-600 bg-opacity-95 text-white px-6 py-3 rounded-full text-sm font-bold mb-4 shadow-xl" style={{ color: '#1B4D3E' }}>
+              <span className="inline-block bg-white text-adish-dark px-6 py-3 rounded-full text-sm font-bold shadow-xl">
                 REDEFINING BOTANICAL VITALITY
               </span>
             </div>
@@ -292,15 +292,6 @@ export default function Home() {
         <img
           src="/images/sections/wheel-vitality.png"
           alt="Multi-System Vitality Optimization Wheel"
-          className="w-full h-auto object-cover"
-        />
-      </section>
-
-      {/* Adish Hindi Section */}
-      <section className="py-0 px-0 bg-white">
-        <img
-          src="/images/adish-bio-clear.png"
-          alt="Adish in Hindi"
           className="w-full h-auto object-cover"
         />
       </section>

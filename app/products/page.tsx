@@ -1,258 +1,268 @@
 'use client';
 
 import { products } from '@/lib/products';
-import Link from 'next/link';
-import { ShoppingCart, Check } from 'lucide-react';
-import { useState } from 'react';
+import { ShoppingCart, Check, Star, ShieldCheck } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import ImageGallery from '@/components/ImageGallery';
 
 export default function Products() {
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
+  const [quantities, setQuantities] = useState<{ [key: string]: number }>({
+    'cordyceps-powder': 1,
+    'performance-tincture': 1,
+  });
+
+  // Scroll to first product on page load
+  useEffect(() => {
+    const firstProductElement = document.getElementById('product-cordyceps-powder');
+    if (firstProductElement) {
+      setTimeout(() => {
+        firstProductElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+  }, []);
 
   const handleAddToCart = (productId: string, productName: string, price: number) => {
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    cart.push({ id: productId, name: productName, price });
+    const qty = quantities[productId] || 1;
+    for (let i = 0; i < qty; i++) {
+      cart.push({ id: productId, name: productName, price });
+    }
     localStorage.setItem('cart', JSON.stringify(cart));
-
-    // Trigger storage event for cart update
     window.dispatchEvent(new Event('storage'));
-
     setSelectedProduct(productId);
     setTimeout(() => setSelectedProduct(null), 2000);
   };
 
+  const handleQuantityChange = (productId: string, value: number) => {
+    if (value >= 1) {
+      setQuantities(prev => ({ ...prev, [productId]: value }));
+    }
+  };
+
+  // Image galleries for each product
+  const productImageGalleries: { [key: string]: string[] } = {
+    'cordyceps-powder': [
+      '/images/products/powder.avif',
+      '/images/products/powder-lifestyle.avif',
+      '/images/products/powder-close.avif',
+      '/images/products/powder-mixed.avif',
+      '/images/products/powder-package.avif',
+      '/images/products/powder-spoon.avif',
+    ],
+    'performance-tincture': [
+      '/images/products/tincture-real.avif',
+      '/images/products/tincture-lifestyle.avif',
+      '/images/products/tincture-spoon.avif',
+      '/images/products/tincture-dropper.avif',
+      '/images/products/tincture-bottle.avif',
+      '/images/products/tincture-back.avif',
+    ],
+  };
+
   return (
-    <div className="min-h-screen bg-white overflow-x-hidden w-full">
+    <div className="min-h-screen bg-white">
       {/* Header */}
-      <section className="bg-gradient-to-r from-adish-green to-adish-dark py-8 sm:py-12 px-4 overflow-x-hidden w-full">
-        <div className="max-w-7xl mx-auto w-full">
-          <h1 className="text-3xl sm:text-5xl font-serif font-bold text-white mb-4">
+      <section className="bg-gradient-to-r from-adish-green to-adish-dark py-12 px-4">
+        <div className="max-w-7xl mx-auto">
+          <h1 className="text-5xl font-serif font-bold text-white mb-4">
             Our Products
           </h1>
-          <p className="text-base sm:text-xl text-adish-beige max-w-2xl">
+          <p className="text-xl text-adish-beige max-w-2xl">
             Premium Cordyceps Militaris supplements engineered for performance, vitality, and wellness
           </p>
         </div>
       </section>
 
-      {/* Products Grid */}
-      <section className="py-12 sm:py-20 px-4 overflow-x-hidden w-full">
-        <div className="max-w-7xl mx-auto w-full">
-          <div className="grid md:grid-cols-2 gap-6 sm:gap-12">
-            {products.map((product, idx) => {
-              // Use your product images
-              const heroImages = [
-                '/images/products/powder.avif', // Cordyceps Potency Powder
-                '/images/products/tincture-real.avif' // Cordyceps Endurance Tincture
-              ];
-              return (
-              <div key={product.id} className="border-2 border-adish-beige rounded-lg overflow-hidden hover:shadow-xl transition-shadow">
-                {/* Image */}
-                <div className="h-48 sm:h-96 bg-gray-100 overflow-hidden">
-                  <img
-                    src={heroImages[idx] || product.image}
-                    alt={product.imageAlt || product.name}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
+      {/* Products - Stacked Vertically */}
+      <section className="py-16 px-4">
+        <div className="max-w-7xl mx-auto">
+          {products.map((product, idx) => (
+            <div key={product.id} id={`product-${product.id}`}>
+              {/* Product Section */}
+              <div className="py-12">
+                <div className="grid lg:grid-cols-2 gap-4 lg:gap-12 items-start w-full max-w-full">
+                  {/* Left: Product Image Gallery */}
+                  <div>
+                    <ImageGallery
+                      images={productImageGalleries[product.id]}
+                      productName={product.name}
+                    />
+                  </div>
 
-                {/* Content */}
-                <div className="p-4 sm:p-8">
-                  <h2 className="text-xl sm:text-3xl font-serif font-bold text-adish-dark mb-2">
-                    {product.name}
-                  </h2>
-                  <p className="text-adish-green text-sm sm:text-lg mb-6">{product.description}</p>
+                  {/* Right: Product Details */}
+                  <div className="flex flex-col justify-start px-0 sm:px-2">
+                    {/* Title & Rating */}
+                    <h2 className="text-4xl font-serif font-bold text-adish-dark mb-3">
+                      {product.name}
+                    </h2>
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="flex gap-1">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} size={18} className="fill-adish-gold text-adish-gold" />
+                        ))}
+                      </div>
+                      <span className="text-gray-600 text-sm font-medium">(1,247 verified reviews)</span>
+                    </div>
 
-                  {/* Specs */}
-                  <div className="bg-adish-beige p-4 sm:p-6 rounded-lg mb-6">
-                    <h3 className="font-bold text-adish-dark mb-4 text-sm sm:text-base">Specifications</h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
+                    {/* Trust Badges */}
+                    <div className="flex items-center gap-2 mb-6 text-sm text-adish-green">
+                      <ShieldCheck size={16} className="text-green-600" />
+                      <span>100% Pure • Lab Tested • Quality Assured</span>
+                    </div>
+
+                    {/* Description */}
+                    <p className="text-adish-green text-base mb-6 leading-relaxed font-medium">
+                      {product.description}
+                    </p>
+
+                    {/* Quick Specs */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 mb-8 bg-adish-beige p-3 sm:p-5 rounded-lg border border-adish-gold/20 w-full max-w-full">
                       <div>
-                        <p className="text-adish-green text-xs uppercase tracking-wide">Absorption</p>
+                        <p className="text-adish-green text-xs uppercase tracking-wide font-bold mb-1">Absorption</p>
                         <p className="font-bold text-adish-dark">{product.specs.absorptionSpeed}</p>
                       </div>
                       <div>
-                        <p className="text-adish-green text-xs uppercase tracking-wide">Bioavailability</p>
+                        <p className="text-adish-green text-xs uppercase tracking-wide font-bold mb-1">Bioavailability</p>
                         <p className="font-bold text-adish-dark">{product.specs.bioavailability}</p>
                       </div>
                       <div>
-                        <p className="text-adish-green text-xs uppercase tracking-wide">Dosing</p>
+                        <p className="text-adish-green text-xs uppercase tracking-wide font-bold mb-1">Dosing</p>
                         <p className="font-bold text-adish-dark">{product.specs.dosePrecision}</p>
                       </div>
                       <div>
-                        <p className="text-adish-green text-xs uppercase tracking-wide">Shelf Life</p>
+                        <p className="text-adish-green text-xs uppercase tracking-wide font-bold mb-1">Shelf Life</p>
                         <p className="font-bold text-adish-dark">{product.specs.shelfLife}</p>
                       </div>
                     </div>
-                  </div>
 
-                  {/* Benefits */}
-                  <div className="mb-6">
-                    <h3 className="font-bold text-adish-dark mb-3 text-sm sm:text-base">Key Benefits</h3>
-                    <ul className="space-y-2">
-                      {product.benefits.map((benefit, idx) => (
-                        <li key={idx} className="flex items-start gap-2 text-adish-green">
-                          <span className="text-adish-gold mt-1">✓</span>
-                          <span>{benefit}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Full Description */}
-                  <div className="mb-8 p-3 sm:p-4 bg-white border border-adish-beige rounded-lg">
-                    <p className="text-adish-green text-xs sm:text-sm leading-relaxed whitespace-pre-line">
-                      {product.fullDescription}
-                    </p>
-                  </div>
-
-                  {/* Price & CTA */}
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                    <div>
-                      <p className="text-adish-green text-xs sm:text-sm uppercase tracking-wide">Price</p>
-                      <p className="text-3xl sm:text-4xl font-bold text-adish-gold">₹{product.price}</p>
+                    {/* Price Section */}
+                    <div className="mb-8 pb-8 border-b-2 border-gray-200">
+                      <p className="text-adish-green text-xs uppercase tracking-wide font-bold mb-2">Price</p>
+                      <div className="flex items-baseline gap-3">
+                        <span className="text-5xl font-bold text-adish-gold">₹{product.price}</span>
+                        <span className="text-gray-500 text-sm line-through">₹1,200</span>
+                      </div>
+                      <p className="text-green-600 text-sm font-semibold mt-2">Save ₹200 - Limited Offer</p>
                     </div>
-                    <button
-                      onClick={() => handleAddToCart(product.id, product.name, product.price)}
-                      className={`w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-bold transition-colors flex items-center justify-center gap-2 text-sm sm:text-base ${
-                        selectedProduct === product.id
-                          ? 'bg-green-600 text-white'
-                          : 'bg-adish-green text-white hover:bg-adish-dark'
-                      }`}
-                    >
-                      {selectedProduct === product.id ? (
-                        <>
-                          <Check size={20} /> Added!
-                        </>
-                      ) : (
-                        <>
-                          <ShoppingCart size={20} /> Add to Cart
-                        </>
-                      )}
-                    </button>
+
+                    {/* Quantity + Add to Cart + Buy Now - All on One Line */}
+                    <div className="mb-8 flex flex-wrap items-center gap-2 sm:gap-3 w-full">
+                      {/* Quantity Selector */}
+                      <span className="text-adish-green font-semibold">Qty:</span>
+                      <div className="flex items-center border border-gray-300 rounded-lg">
+                        <button
+                          onClick={() => handleQuantityChange(product.id, (quantities[product.id] || 1) - 1)}
+                          className="px-3 py-2 text-adish-green hover:bg-gray-100 font-bold"
+                        >
+                          −
+                        </button>
+                        <input
+                          type="number"
+                          min="1"
+                          value={quantities[product.id] || 1}
+                          onChange={(e) => handleQuantityChange(product.id, parseInt(e.target.value) || 1)}
+                          className="w-10 text-center border-0 font-bold text-adish-dark"
+                        />
+                        <button
+                          onClick={() => handleQuantityChange(product.id, (quantities[product.id] || 1) + 1)}
+                          className="px-3 py-2 text-adish-green hover:bg-gray-100 font-bold"
+                        >
+                          +
+                        </button>
+                      </div>
+
+                      {/* Add to Cart Button */}
+                      <button
+                        onClick={() => handleAddToCart(product.id, product.name, product.price)}
+                        className={`px-6 py-2 rounded-lg font-bold text-white transition-all flex items-center justify-center gap-2 text-sm shadow-md ${
+                          selectedProduct === product.id
+                            ? 'bg-green-600'
+                            : 'bg-green-700 hover:bg-green-800'
+                        }`}
+                      >
+                        {selectedProduct === product.id ? (
+                          <>
+                            <Check size={16} /> Added!
+                          </>
+                        ) : (
+                          <>
+                            <ShoppingCart size={16} /> Add to Cart
+                          </>
+                        )}
+                      </button>
+
+                      {/* Buy Now Button */}
+                      <button
+                        onClick={() => handleAddToCart(product.id, product.name, product.price)}
+                        className="px-6 py-2 rounded-lg font-bold bg-adish-gold text-adish-dark hover:bg-yellow-500 transition-all shadow-md text-sm flex items-center justify-center"
+                      >
+                        Buy Now
+                      </button>
+                    </div>
+
+                    {/* Key Benefits */}
+                    <div className="bg-white border-l-4 border-adish-gold p-5 rounded-lg">
+                      <h3 className="font-bold text-adish-dark mb-4 text-sm uppercase tracking-wide">Key Benefits</h3>
+                      <ul className="space-y-3">
+                        {product.benefits.slice(0, 4).map((benefit, i) => (
+                          <li key={i} className="flex items-start gap-3 text-adish-green text-sm">
+                            <span className="text-adish-gold font-bold mt-1">✓</span>
+                            <span className="font-medium">{benefit}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Below Product: Full Width Info */}
+                <div className="mt-16 pt-12 border-t-2 border-gray-200">
+                  {/* Suggested Use */}
+                  <div className="grid md:grid-cols-2 gap-8 mb-12">
+                    <div className="p-6 bg-adish-beige rounded-lg border-l-4 border-adish-gold">
+                      <h3 className="font-bold text-adish-dark mb-3 text-lg">📋 Suggested Use</h3>
+                      <p className="text-adish-green text-sm leading-relaxed">
+                        {idx === 0
+                          ? "Mix 1-2 teaspoons daily into your preferred beverage - water, coffee, smoothies, or tea. Best taken with meals for optimal absorption. Start with 1 teaspoon and increase gradually."
+                          : "Place 10-20 drops under tongue for 30-60 seconds before swallowing. Best taken on an empty stomach or as directed by a healthcare professional. Adjust dosage based on personal response."
+                        }
+                      </p>
+                    </div>
+
+                    <div className="p-6 bg-white border-2 border-adish-beige rounded-lg">
+                      <h3 className="font-bold text-adish-dark mb-3 text-lg">🧪 Specifications</h3>
+                      <div className="space-y-2 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-adish-green font-semibold">Form:</span>
+                          <span className="text-adish-dark font-medium">{idx === 0 ? 'Fine Powder' : 'Liquid Extract'}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-adish-green font-semibold">Size:</span>
+                          <span className="text-adish-dark font-medium">{idx === 0 ? '50g' : '30 mL (1 FL OZ)'}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-adish-green font-semibold">Shelf Life:</span>
+                          <span className="text-adish-dark font-medium">{product.specs.shelfLife}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-adish-green font-semibold">Extract:</span>
+                          <span className="text-adish-dark font-medium">{product.specs.extraction}</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            );
-            })}
-          </div>
 
-          {/* Detailed Comparison */}
-          <div className="mt-12 sm:mt-20 mb-12 sm:mb-16">
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-adish-dark mb-8 sm:mb-12 text-center">
-              Choose Your Optimal Format
-            </h2>
-
-            <div className="grid md:grid-cols-2 gap-4 sm:gap-8">
-              <div className="bg-white border-2 border-adish-beige rounded-lg p-4 sm:p-8">
-                <h3 className="text-lg sm:text-2xl font-bold text-adish-dark mb-4 sm:mb-6">Cordyceps Potency Powder</h3>
-
-                <div className="mb-4 sm:mb-6">
-                  <h4 className="font-bold text-adish-dark mb-3 text-sm sm:text-base">Best For:</h4>
-                  <ul className="space-y-2">
-                    <li className="flex gap-2 text-xs sm:text-sm">
-                      <span className="text-adish-gold">→</span>
-                      <span className="text-adish-green">Daily wellness rituals and routines</span>
-                    </li>
-                    <li className="flex gap-2 text-xs sm:text-sm">
-                      <span className="text-adish-gold">→</span>
-                      <span className="text-adish-green">Blending into smoothies, teas, or beverages</span>
-                    </li>
-                    <li className="flex gap-2 text-xs sm:text-sm">
-                      <span className="text-adish-gold">→</span>
-                      <span className="text-adish-green">Sustained, gradual energy release</span>
-                    </li>
-                    <li className="flex gap-2 text-xs sm:text-sm">
-                      <span className="text-adish-gold">→</span>
-                      <span className="text-adish-green">Long-term storage and affordability</span>
-                    </li>
-                  </ul>
+              {/* Divider Between Products */}
+              {idx === 0 && (
+                <div className="my-12 flex justify-center">
+                  <div className="w-32 h-1 bg-gradient-to-r from-transparent via-adish-gold to-transparent rounded-full"></div>
                 </div>
-
-                <div>
-                  <h4 className="font-bold text-adish-dark mb-3 text-sm sm:text-base">Consumption Method:</h4>
-                  <p className="text-adish-green text-xs sm:text-sm">Mix 1-2 tsp daily into your favorite beverage. Traditional preparation method honors centuries of use.</p>
-                </div>
-              </div>
-
-              <div className="bg-white border-2 border-adish-beige rounded-lg p-4 sm:p-8">
-                <h3 className="text-lg sm:text-2xl font-bold text-adish-dark mb-4 sm:mb-6">Cordyceps Endurance Tincture</h3>
-
-                <div className="mb-4 sm:mb-6">
-                  <h4 className="font-bold text-adish-dark mb-3 text-sm sm:text-base">Best For:</h4>
-                  <ul className="space-y-2">
-                    <li className="flex gap-2 text-xs sm:text-sm">
-                      <span className="text-adish-gold">★</span>
-                      <span className="text-adish-green">Athletes and performance optimization</span>
-                    </li>
-                    <li className="flex gap-2 text-xs sm:text-sm">
-                      <span className="text-adish-gold">★</span>
-                      <span className="text-adish-green">Rapid absorption when you need it most</span>
-                    </li>
-                    <li className="flex gap-2 text-xs sm:text-sm">
-                      <span className="text-adish-gold">★</span>
-                      <span className="text-adish-green">Precise drop-by-drop dosing control</span>
-                    </li>
-                    <li className="flex gap-2 text-xs sm:text-sm">
-                      <span className="text-adish-gold">★</span>
-                      <span className="text-adish-green">Longest shelf life (3-5 years)</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 className="font-bold text-adish-dark mb-3 text-sm sm:text-base">Consumption Method:</h4>
-                  <p className="text-adish-green text-xs sm:text-sm">Place 10-20 drops under tongue daily. Sublingual delivery bypasses digestion for rapid, full bioavailability.</p>
-                </div>
-              </div>
+              )}
             </div>
-          </div>
-
-          {/* Bundle Offer */}
-          <div className="mt-12 sm:mt-20 bg-gradient-to-r from-adish-gold to-adish-light-gold p-6 sm:p-12 rounded-lg">
-            <div className="max-w-3xl">
-              <h3 className="text-2xl sm:text-3xl font-serif font-bold text-adish-dark mb-4">
-                Bundle & Save
-              </h3>
-              <p className="text-adish-dark mb-6 text-sm sm:text-lg">
-                Get both Powder and Tincture for ₹1,800 (Save ₹200)
-              </p>
-              <button className="bg-adish-dark text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-bold hover:bg-adish-green transition-colors text-sm sm:text-base">
-                Buy Bundle
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Why Adish */}
-      <section className="py-12 sm:py-20 px-4 bg-adish-beige overflow-x-hidden w-full">
-        <div className="max-w-7xl mx-auto w-full">
-          <h2 className="text-3xl sm:text-4xl font-serif font-bold text-adish-dark text-center mb-8 sm:mb-12">
-            Why Choose Adish Ventures?
-          </h2>
-          <div className="grid md:grid-cols-3 gap-4 sm:gap-8">
-            <div className="bg-white p-4 sm:p-8 rounded-lg">
-              <div className="text-3xl sm:text-4xl font-bold text-adish-gold mb-4">🌿</div>
-              <h3 className="text-base sm:text-xl font-bold text-adish-dark mb-3">Pure Science</h3>
-              <p className="text-adish-green text-xs sm:text-sm">
-                Dual-extract methodology honoring both traditional wisdom and modern biochemistry. No fillers, no compromises.
-              </p>
-            </div>
-            <div className="bg-white p-4 sm:p-8 rounded-lg">
-              <div className="text-3xl sm:text-4xl font-bold text-adish-gold mb-4">⚡</div>
-              <h3 className="text-base sm:text-xl font-bold text-adish-dark mb-3">Performance First</h3>
-              <p className="text-adish-green text-xs sm:text-sm">
-                Engineered for measurable biological outcomes. From ATP synthesis to immune optimization—real results.
-              </p>
-            </div>
-            <div className="bg-white p-4 sm:p-8 rounded-lg">
-              <div className="text-3xl sm:text-4xl font-bold text-adish-gold mb-4">🎯</div>
-              <h3 className="text-base sm:text-xl font-bold text-adish-dark mb-3">Hyper-Targeted</h3>
-              <p className="text-adish-green text-xs sm:text-sm">
-                Not another general wellness brand. We specialize in Cordyceps Militaris—one ingredient, infinite intelligence.
-              </p>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
     </div>
