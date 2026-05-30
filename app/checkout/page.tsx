@@ -104,7 +104,7 @@ export default function Checkout() {
       shippingMethod,
       paymentMethod,
       cart,
-      total: calculateTotal(),
+      total,
     });
   };
 
